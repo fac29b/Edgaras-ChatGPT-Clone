@@ -1,5 +1,7 @@
 :root {
   --main-bg-color: rgb(30 30 30);
+  --text-color: rgb(236, 236, 236);
+  --hover-color: rgb(65, 65, 65);
 }
 
 body {
@@ -19,30 +21,52 @@ body {
   top: 50%;
   left: 20rem;
   z-index: 5;
-  background-color: #333;
-  color: white;
-  padding: 1rem;
+  color: var(--text-color);
   border: none;
   cursor: pointer;
   transition: left 0.1s ease;
+  width: 1.5rem;
+  height: 2rem;
+}
+
+.toggle-btn-line01 {
+  background-color: var(--hover-color);
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0.4rem;
+  height: 1rem;
+  z-index: 11;
+  border-radius: 1rem 1rem 0rem 0rem;
+}
+
+.toggle-btn-line02 {
+  background-color: var(--hover-color);
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0.4rem;
+  height: 1rem;
+  z-index: 11;
+  border-radius: 0rem 0rem 1rem 1rem;
 }
 
 .left-menu-container.left-menu-closed {
   width: 0rem;
   overflow: hidden;
+  opacity: 0;
 }
 
 .left-menu-container {
-  background-color: aqua;
+  background-color: rgb(20, 20, 20);
   display: flex;
   flex-direction: column;
   width: 20rem;
   height: 100vh;
-  transition: width 0.1s ease;
+  transition: width 0.2s ease, opacity 0.1s ease;
 }
 
 .left-menu-options {
-  background-color: aqua;
   display: flex;
   height: 100vh;
   flex-direction: column;
@@ -50,76 +74,65 @@ body {
 }
 
 .chat-a {
-  background-color: blue;
   padding: 0.3rem 0 0.3rem 1rem;
+  color: var(--text-color);
 }
 
 .new-chat-btn {
-  background-color: greenyellow;
+  background-color: var(--main-bg-color);
+  border: none;
+  border: 1px solid var(--text-color);
   display: flex;
   margin: 0.5rem;
   border-radius: 0.8rem;
-}
-
-.new-chat-btn:hover {
-  background-color: rgb(66, 99, 16);
+  color: var(--text-color);
   cursor: pointer;
 }
 
 .chat-btn-container {
-  background-color: blueviolet;
   padding: 0.5rem;
   display: flex;
 }
 
 .chat-btn {
-  background-color: yellow;
+  background-color: var(--main-bg-color);
+  color: var(--text-color);
   padding: 0.5rem;
   border-radius: 0.8rem 0 0 0.8rem;
   width: 90%;
   border: none;
-  border-left: solid 1px black;
-  border-top: solid 1px black;
-  border-bottom: solid 1px black;
-}
-
-.chat-btn:hover {
-  background-color: rgb(95, 95, 14);
+  border-left: solid 1px var(--text-color);
+  border-top: solid 1px var(--text-color);
+  border-bottom: solid 1px var(--text-color);
   cursor: pointer;
 }
 
 .nested-chat-btn {
-  background-color: yellow;
+  background-color: var(--main-bg-color);
+  color: var(--text-color);
   position: relative;
   border-radius: 0 0.8rem 0.8rem 0;
   width: 10%;
   border: none;
-  border-right: solid 1px black;
-  border-top: solid 1px black;
-  border-bottom: solid 1px black;
-}
-
-.nested-chat-btn:hover {
-  background-color: #316647;
+  border-right: solid 1px var(--text-color);
+  border-top: solid 1px var(--text-color);
+  border-bottom: solid 1px var(--text-color);
   cursor: pointer;
 }
 
 .nested-btn-menu {
-  background-color: #2ecc71;
+  background-color: var(--main-bg-color);
   position: absolute;
   border-radius: 0.8rem;
   display: none;
   z-index: 10;
-}
-
-.nested-btn-menu:hover {
-  background-color: #327e52;
+  border: 1px solid var(--text-color);
 }
 
 .nested-btn-menu a {
   display: block;
   padding: 0.5rem;
-  color: white;
+  color: var(--text-color);
   text-decoration: none;
 }
 
@@ -128,16 +141,15 @@ body {
 }
 
 .profile-button {
-  background-color: cadetblue;
+  background-color: var(--main-bg-color);
+  border: none;
+  border: 1px solid var(--text-color);
+  color: var(--text-color);
   bottom: 0;
   display: flex;
   flex-direction: row;
   margin: 0.5rem;
   border-radius: 0.8rem;
-}
-
-.profile-button:hover {
-  background-color: rgb(36, 66, 67);
   cursor: pointer;
 }
 
@@ -159,12 +171,11 @@ body {
 }
 
 header {
-  background-color: red;
+  background-color: var(--main-bg-color);
   height: 3rem;
 }
 
 .conversation-container {
-  background-color: #316647;
   height: 84vh;
   display: flex;
   flex-direction: column;
@@ -185,42 +196,82 @@ header {
 }
 
 .conver-user {
-  background-color: greenyellow;
   display: flex;
   border-radius: 0.8rem;
 }
 
 .conver-username {
   margin: auto auto auto 0rem;
+  color: var(--text-color);
 }
 
 .conver-text {
-  background-color: greenyellow;
+  color: var(--text-color);
   margin-left: 2.5rem;
 }
 
 .textarea-container {
-  background-color: #4b5a51;
+  background-color: var(--main-bg-color);
   height: 6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .textarea-cont {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: inherit;
+  position: relative;
+  height: 3rem;
+  width: 40%;
 }
 
 .textarea-cont textarea {
-  width: 40%;
+  background-color: var(--main-bg-color);
+  border: none;
+  border: 1px solid var(--text-color);
+  color: var(--text-color);
   font-size: 1rem;
   height: 1.1rem;
-  padding: 1rem;
+  padding: 1rem 3rem 1rem 1rem;
+  border-radius: 0.8rem;
+  width: 100%;
+  line-height: 1;
   resize: none;
 }
 
 .conver-submit-btn {
+  background-color: var(--main-bg-color);
+  border: none;
+  border: 1px solid var(--text-color);
+  color: var(--text-color);
+  position: absolute;
+  right: 0.2rem;
   margin: 0.5rem;
   height: 2rem;
   width: 2rem;
+  cursor: pointer;
+  border-radius: 0.8rem;
+}
+
+.chat-btn:hover,
+.nested-chat-btn:hover,
+.new-chat-btn:hover,
+.textarea-cont textarea:hover,
+.conver-submit-btn:hover,
+.nested-btn-menu:hover,
+.profile-button:hover {
+  border-color: var(--hover-color);
+}
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--hover-color);
+  border-radius: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--hover-color);
 }
