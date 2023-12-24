@@ -1,0 +1,226 @@
+:root {
+  --main-bg-color: rgb(30 30 30);
+}
+
+body {
+  background-color: var(--main-bg-color);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  max-height: 100vh;
+}
+
+.toggle-left-menu-button.left-menu-toggle-button-transition {
+  left: 0rem;
+}
+
+.toggle-left-menu-button {
+  position: absolute;
+  top: 50%;
+  left: 20rem;
+  z-index: 5;
+  background-color: #333;
+  color: white;
+  padding: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: left 0.1s ease;
+}
+
+.left-menu-container.left-menu-closed {
+  width: 0rem;
+  overflow: hidden;
+}
+
+.left-menu-container {
+  background-color: aqua;
+  display: flex;
+  flex-direction: column;
+  width: 20rem;
+  height: 100vh;
+  transition: width 0.1s ease;
+}
+
+.left-menu-options {
+  background-color: aqua;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.chat-a {
+  background-color: blue;
+  padding: 0.3rem 0 0.3rem 1rem;
+}
+
+.new-chat-btn {
+  background-color: greenyellow;
+  display: flex;
+  margin: 0.5rem;
+  border-radius: 0.8rem;
+}
+
+.new-chat-btn:hover {
+  background-color: rgb(66, 99, 16);
+  cursor: pointer;
+}
+
+.chat-btn-container {
+  background-color: blueviolet;
+  padding: 0.5rem;
+  display: flex;
+}
+
+.chat-btn {
+  background-color: yellow;
+  padding: 0.5rem;
+  border-radius: 0.8rem 0 0 0.8rem;
+  width: 90%;
+  border: none;
+  border-left: solid 1px black;
+  border-top: solid 1px black;
+  border-bottom: solid 1px black;
+}
+
+.chat-btn:hover {
+  background-color: rgb(95, 95, 14);
+  cursor: pointer;
+}
+
+.nested-chat-btn {
+  background-color: yellow;
+  position: relative;
+  border-radius: 0 0.8rem 0.8rem 0;
+  width: 10%;
+  border: none;
+  border-right: solid 1px black;
+  border-top: solid 1px black;
+  border-bottom: solid 1px black;
+}
+
+.nested-chat-btn:hover {
+  background-color: #316647;
+  cursor: pointer;
+}
+
+.nested-btn-menu {
+  background-color: #2ecc71;
+  position: absolute;
+  border-radius: 0.8rem;
+  display: none;
+  z-index: 10;
+}
+
+.nested-btn-menu:hover {
+  background-color: #327e52;
+}
+
+.nested-btn-menu a {
+  display: block;
+  padding: 0.5rem;
+  color: white;
+  text-decoration: none;
+}
+
+.nested-btn-menu-display {
+  display: block;
+}
+
+.profile-button {
+  background-color: cadetblue;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  margin: 0.5rem;
+  border-radius: 0.8rem;
+}
+
+.profile-button:hover {
+  background-color: rgb(36, 66, 67);
+  cursor: pointer;
+}
+
+.profile-img {
+  padding: 0.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+}
+
+.profile-name {
+  margin: auto auto auto 0.5rem;
+}
+
+.right-side-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+header {
+  background-color: red;
+  height: 3rem;
+}
+
+.conversation-container {
+  background-color: #316647;
+  height: 84vh;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.conver-user-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem auto 0.5rem auto;
+  width: 50%;
+}
+
+.conversation-profile-img {
+  padding: 0.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+}
+
+.conver-user {
+  background-color: greenyellow;
+  display: flex;
+  border-radius: 0.8rem;
+}
+
+.conver-username {
+  margin: auto auto auto 0rem;
+}
+
+.conver-text {
+  background-color: greenyellow;
+  margin-left: 2.5rem;
+}
+
+.textarea-container {
+  background-color: #4b5a51;
+  height: 6rem;
+}
+
+.textarea-cont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: inherit;
+}
+
+.textarea-cont textarea {
+  width: 40%;
+  font-size: 1rem;
+  height: 1.1rem;
+  padding: 1rem;
+  resize: none;
+}
+
+.conver-submit-btn {
+  margin: 0.5rem;
+  height: 2rem;
+  width: 2rem;
+}
