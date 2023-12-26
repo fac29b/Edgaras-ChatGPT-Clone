@@ -186,7 +186,7 @@ header {
   display: flex;
   flex-direction: column;
   margin: 0.5rem auto 0.5rem auto;
-  width: 50%;
+  width: 50vw;
 }
 
 .conversation-profile-img {
@@ -274,4 +274,8 @@ header {
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: var(--hover-color);
+}
+
+.code-style {
+  background-color: black;
 }
