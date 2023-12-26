@@ -14,7 +14,7 @@
     <div class="left-menu-container">
       <button class="new-chat-btn">
         <img
-          src="https://pics.craiyon.com/2023-06-25/840d68a3348b4f00b23af0cfc4ac71d2.webp"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/768px-ChatGPT_logo.svg.png"
           alt="Profile imgage"
           class="profile-img"
         /><a class="profile-name">New chat</a>
@@ -48,18 +48,17 @@
 
     <div class="right-side-container">
       <header></header>
-      <div class="conversation-container">
+      <div class="conversation-container" id="conversationContainer">
         <div class="conver-user-container">
           <div class="conver-user">
             <img
-              src="https://pics.craiyon.com/2023-06-25/840d68a3348b4f00b23af0cfc4ac71d2.webp"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/768px-ChatGPT_logo.svg.png"
               class="conversation-profile-img"
             />
-            <div class="conver-username">You</div>
+            <div class="conver-username">ChatGPT:</div>
           </div>
           <div class="conver-text">
-            Text Text Text Text Text TextText Text Text Text Text TextText Text
-            Text Text Text TextText Text Text Text Text Text
+            <p>How can I help you today?</p>
           </div>
         </div>
       </div>
@@ -69,7 +68,7 @@
             id="resizableTextarea"
             placeholder="Type your message here..."
           ></textarea>
-          <button class="conver-submit-btn">S</button>
+          <button class="conver-submit-btn" onclick="submitForm()">S</button>
         </div>
       </div>
     </div>
