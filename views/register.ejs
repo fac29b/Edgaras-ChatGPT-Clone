@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChatGPT Clone</title>
+    <link rel="stylesheet" href="./login.css" />
+    <style></style>
+  </head>
+  <body>
+    <div class="login-container">
+      <a id="registrationSuccess" style="display: none; color: green"
+        >Registration completed!</a
+      >
+      <a id="registrationFailed" style="display: none; color: red"
+        >Registration failed!</a
+      >
+      <h2>Register</h2>
+      <form action="" method="post" onsubmit="SubmitForm(event)">
+        <label for="username">Username:</label>
+        <input
+          class="inputField"
+          type="text"
+          id="username"
+          name="username"
+          required
+          minlength="4"
+          autocomplete="off"
+          pattern="[a-zA-Z0-9!$%&@]+"
+          title="Letters numbers and !,$,%,&,@ are allowed"
+        />
+
+        <label for="password">Password:</label>
+        <input
+          class="inputField"
+          type="password"
+          id="password"
+          name="password"
+          required
+          minlength="8"
+          autocomplete="off"
+          pattern="[a-zA-Z0-9!$%&@]+"
+          title="Letters numbers and !,$,%,&,@ are allowed"
+        />
+
+        <button type="submit">Register</button>
+      </form>
+
+      <p><a href="/" class="reg-log-button">Log in</a></p>
+    </div>
+    <script src="./register.js"></script>
+  </body>
+</html>

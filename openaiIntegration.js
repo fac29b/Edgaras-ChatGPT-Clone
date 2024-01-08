@@ -7,11 +7,9 @@ const openai = new OpenAI({
 async function generateResponse(message) {
   try {
     const response = await openai.chat.completions.create({
-      messages: [
-        { role: "system", content: message !== undefined ? message : "Hello" },
-      ],
+      messages: message,
       model: "gpt-3.5-turbo",
-      max_tokens: 150,
+      max_tokens: 1024,
       n: 1,
     });
 

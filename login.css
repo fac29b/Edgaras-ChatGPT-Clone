@@ -1,0 +1,65 @@
+:root {
+  --main-bg-color: rgb(30 30 30);
+  --text-color: rgb(236, 236, 236);
+  --hover-color: rgb(65, 65, 65);
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--main-bg-color);
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: var(--text-color);
+}
+
+.login-container {
+  background-color: var(--main-bg-color);
+  border: 1px solid var(--text-color);
+  padding: 2rem;
+  border-radius: 0.8rem;
+  width: 20rem;
+}
+
+.login-container label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.login-container input {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1.5rem;
+  box-sizing: border-box;
+}
+
+.login-container button {
+  background-color: var(--main-bg-color);
+  border: 1px solid var(--text-color);
+  color: var(--text-color);
+  padding: 0.8rem;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  width: 100%;
+}
+
+.inputField {
+  background-color: var(--main-bg-color);
+  color: var(--text-color);
+  border: none;
+  border: 1px solid var(--text-color);
+  border-radius: 0.8rem;
+  font-size: 16px;
+}
+
+.reg-log-button {
+  color: var(--text-color);
+}
+
+.login-container button:hover,
+.inputField:hover {
+  border: 1px solid var(--hover-color);
+}
