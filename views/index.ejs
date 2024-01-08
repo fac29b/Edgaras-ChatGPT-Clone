@@ -12,7 +12,7 @@
       <div class="toggle-btn-line02"></div>
     </div>
     <div class="left-menu-container">
-      <button class="new-chat-btn">
+      <button class="new-chat-btn" onclick="NewConversation()">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/768px-ChatGPT_logo.svg.png"
           alt="Profile imgage"
@@ -21,29 +21,21 @@
       </button>
 
       <div class="left-menu-options">
-        <a class="chat-a">Today</a>
-        <div class="chat-btn-container">
-          <button class="chat-btn">
-            Chat
-            <button class="nested-chat-btn" onclick="toggleNestedMenu(this)">
-              ---
-            </button>
-          </button>
-
-          <div class="nested-btn-menu">
-            <a href="#">Delete chat</a>
-          </div>
-        </div>
+        <!--<a class="chat-a">Today</a>-->
       </div>
 
-      <button class="profile-button">
+      <div class="profile-button" onclick="TogglePopUp()">
         <img
           src="https://pics.craiyon.com/2023-06-25/840d68a3348b4f00b23af0cfc4ac71d2.webp"
-          alt="Profile imgage"
+          alt="Profile image"
           class="profile-img"
         />
-        <a class="profile-name">Username</a>
-      </button>
+        <a class="profile-name" id="username"></a>
+        <!-- Popup menu with logout option -->
+        <div class="popup-menu">
+          <a onclick="Logout()">Logout</a>
+        </div>
+      </div>
     </div>
 
     <div class="right-side-container">
@@ -55,11 +47,9 @@
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/768px-ChatGPT_logo.svg.png"
               class="conversation-profile-img"
             />
-            <div class="conver-username">ChatGPT:</div>
+            <div class="conver-username">ChatGPT</div>
           </div>
-          <div class="conver-text">
-            <p>How can I help you today?</p>
-          </div>
+          <div class="conver-text">How can I help you today?</div>
         </div>
       </div>
       <div class="textarea-container">
@@ -72,6 +62,7 @@
         </div>
       </div>
     </div>
+    <script src="./login.js"></script>
     <script src="./index.js"></script>
   </body>
 </html>
