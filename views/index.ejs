@@ -25,11 +25,7 @@
       </div>
 
       <div class="profile-button" onclick="TogglePopUp()">
-        <img
-          src="https://pics.craiyon.com/2023-06-25/840d68a3348b4f00b23af0cfc4ac71d2.webp"
-          alt="Profile image"
-          class="profile-img"
-        />
+        <div class="profile-avatar-letter"><a id="user-first-letter"></a></div>
         <a class="profile-name" id="username"></a>
         <!-- Popup menu with logout option -->
         <div class="popup-menu">
@@ -54,11 +50,15 @@
       </div>
       <div class="textarea-container">
         <div class="textarea-cont">
-          <textarea
-            id="resizableTextarea"
-            placeholder="Type your message here..."
-          ></textarea>
-          <button class="conver-submit-btn" onclick="submitForm()">S</button>
+          <form onsubmit="submitForm(); return false;">
+            <textarea
+              class="textarea-cont-textarea"
+              id="resizableTextarea"
+              placeholder="Type your message here..."
+              onkeydown="return handleEnterKey(event)"
+            ></textarea>
+            <button class="conver-submit-btn" onclick="submitForm()">S</button>
+          </form>
         </div>
       </div>
     </div>

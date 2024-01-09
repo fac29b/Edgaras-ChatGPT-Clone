@@ -59,6 +59,49 @@ function ScrollDownConversation() {
   conversationArea.scrollTop = conversationArea.scrollHeight;
 }
 
+// Display first letter of the username as a username logo
+function DisplayUserLogo() {
+  const firstUsernameLetter = document.getElementById("username");
+  return firstUsernameLetter.textContent[0];
+}
+
+// Highlight active conversation
+function HighlightConversation(conversationId) {
+  const allConversationBtns = document.querySelectorAll(".chat-btn");
+  const allNestedButtons = document.querySelectorAll(".nested-chat-btn");
+  const btnChild = document.getElementById(conversationId);
+
+  // Remove the class from all conversation buttons
+  allConversationBtns.forEach((btn) => {
+    btn.classList.remove("chat-btn-focus");
+  });
+
+  // Remove the class from all nested buttons
+  allNestedButtons.forEach((nestedBtn) => {
+    nestedBtn.classList.remove("nested-chat-btn-focus");
+  });
+
+  // Check if user pressed on new conversation btn Default -1;
+  if (conversationId === -1) return;
+
+  btnChild.parentElement.classList.add("chat-btn-focus");
+
+  const nextButton = btnChild.parentElement.nextElementSibling;
+
+  // Add a class to the next sibling button if it exists
+  if (nextButton && nextButton.classList.contains("nested-chat-btn")) {
+    nextButton.classList.add("nested-chat-btn-focus");
+  }
+}
+
+function handleEnterKey(event) {
+  if (event.keyCode === 13 && !event.shiftKey) {
+    submitForm();
+    return false;
+  }
+  return true;
+}
+
 // Send message
 async function sendMessage(message) {
   const response = await fetch("/submit", {
@@ -70,7 +113,7 @@ async function sendMessage(message) {
   if (response.ok) {
     const result = await response.json();
     RemoveAiReasponseLoding();
-    updateConversation(result.openaiResponse, "ChatGPT");
+    UpdateConversation(result.openaiResponse, "ChatGPT");
     if (currentConversationId !== result.conversationId) {
       AddConversation(result.conversationTopic, result.conversationId);
     }
@@ -94,8 +137,8 @@ async function RetrieveUserData() {
   if (response.ok) {
     const result = await response.json();
     console.log(result);
-    InsertUsername(result);
-    OnLoadAddConversation(result);
+    InsertUsername(result.userData);
+    OnLoadAddConversation(result.userData);
   } else {
     console.error(
       "Failed to send message:",
@@ -107,15 +150,76 @@ async function RetrieveUserData() {
 
 function InsertUsername(username) {
   const usernameId = document.getElementById("username");
-  usernameId.textContent = username.userData.user.username;
+  const usernameFirstLetter = document.getElementById("user-first-letter");
+  usernameFirstLetter.textContent = username.username[0];
+  usernameId.textContent = username.username;
+}
+
+function OnLoadAddConversation(data) {
+  if (data.conversations.length === 0) {
+    return;
+  }
+  currentConversationId = data.conversations[data.conversations.length - 1].id;
+  for (const conver in data.conversations) {
+    conversationMenuContainer.insertAdjacentHTML(
+      "afterbegin",
+      `<div class="chat-btn-container" id="${data.conversations[conver].id}delete">
+      <button class="chat-btn" onclick="SelectConversation(${data.conversations[conver].id})">
+        <a id="${data.conversations[conver].id}">${data.conversations[conver].conversation}</a>
+        <button class="nested-chat-btn" onclick="toggleNestedMenu(this)">
+          ---
+        </button>
+      </button>
+  
+      <div class="nested-btn-menu">
+        <a onclick="DeleteCoversation(${data.conversations[conver].id})">Delete chat</a>
+      </div>
+    </div>`
+    );
+  }
+  // Highlight currently active conversation
+  HighlightConversation(currentConversationId);
+  // Load conversation messages
+  DisplayMessages(data);
+}
+
+function DisplayMessages(data) {
+  for (const key in data.messages) {
+    if (data.messages[key].conversationId === currentConversationId) {
+      for (const message in data.messages[key].messages) {
+        const jsonObject = JSON.parse(
+          data.messages[key].messages[message].message_text
+        );
+        console.log("Message: ", jsonObject.content);
+        conversationContainer.insertAdjacentHTML(
+          "beforeend",
+          `<div class="conver-user-container">
+              <div class="conver-user">
+              ${CheckMessageFrom(
+                jsonObject.role === "user" ? "You" : "ChatGPT"
+              )}
+              <div class="conver-username">${
+                jsonObject.role === "user" ? "You" : "ChatGPT"
+              }</div>
+              </div>
+              <div class="conver-text">
+                  ${jsonObject.content}
+              </div>
+          </div>`
+        );
+      }
+    }
+  }
+  // Scroll down after new message been added
+  ScrollDownConversation();
 }
 
 function AddConversation(conversationTopic, conversationId) {
   currentConversationId = conversationId;
   conversationMenuContainer.insertAdjacentHTML(
-    "beforebegin",
+    "afterbegin",
     `<div class="chat-btn-container" id="${conversationId}delete">
-    <button class="chat-btn">
+    <button class="chat-btn" onclick="SelectConversation(${conversationId})">
       <a id="${conversationId}">${conversationTopic}</a>
       <button class="nested-chat-btn" onclick="toggleNestedMenu(this)">
         ---
@@ -127,22 +231,17 @@ function AddConversation(conversationTopic, conversationId) {
     </div>
   </div>`
   );
+  // Highlight currently active conversation
+  HighlightConversation(currentConversationId);
 }
 
 // Update conversation and input html elements
-function updateConversation(message, username) {
+function UpdateConversation(message, username) {
   conversationContainer.insertAdjacentHTML(
     "beforeend",
     `<div class="conver-user-container">
         <div class="conver-user">
-        <img
-            src="${
-              username === "You"
-                ? "https://pics.craiyon.com/2023-06-25/840d68a3348b4f00b23af0cfc4ac71d2.webp"
-                : "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/768px-ChatGPT_logo.svg.png"
-            }"
-            class="conversation-profile-img"
-        />
+        ${CheckMessageFrom(username)}
         <div class="conver-username">${username}</div>
         </div>
         <div class="conver-text">
@@ -157,13 +256,22 @@ function updateConversation(message, username) {
   ScrollDownConversation();
 }
 
+// Checks if message is from user or chatgpt
+function CheckMessageFrom(username) {
+  if (username === "You") {
+    return `<div class="conversation-user-avatar"><a>${DisplayUserLogo()}</a></div>`;
+  } else {
+    return `<img src="${"https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/768px-ChatGPT_logo.svg.png"} "class="conversation-profile-img"/>`;
+  }
+}
+
 // Submit message to server
 function submitForm() {
   const textarea = document.getElementById("resizableTextarea");
   const message = textarea.value.trim();
   if (message !== "") {
     sendMessage(message);
-    updateConversation(message, "You");
+    UpdateConversation(message, "You");
     // Clear the textarea
     textarea.value = "";
   }
@@ -191,78 +299,11 @@ function RemoveAiReasponseLoding() {
   }
 }
 
-function OnLoadAddConversation(data) {
-  console.log(data.userData.conversations.length === 0);
-  if (data.userData.conversations.length === 0) {
-    return;
-  }
-  currentConversationId = data.userData.conversations[0].id;
-  console.log(data.userData.conversations[0].id);
-  for (const conver in data.userData.conversations) {
-    console.log(data.userData.conversations[conver].id);
-    console.log(data.userData.conversations[conver].conversation);
-
-    conversationMenuContainer.insertAdjacentHTML(
-      "afterbegin",
-      `<div class="chat-btn-container" id="${data.userData.conversations[conver].id}delete">
-      <button class="chat-btn" onclick="SelectConversation(${data.userData.conversations[conver].id})">
-        <a id="${data.userData.conversations[conver].id}">${data.userData.conversations[conver].conversation}</a>
-        <button class="nested-chat-btn" onclick="toggleNestedMenu(this)">
-          ---
-        </button>
-      </button>
-  
-      <div class="nested-btn-menu">
-        <a onclick="DeleteCoversation(${data.userData.conversations[conver].id})">Delete chat</a>
-      </div>
-    </div>`
-    );
-  }
-  // Load conversation messages
-  DisplayMessages(data);
-}
-
-function DisplayMessages(data) {
-  for (const key in data.userData.messages) {
-    console.log("Messages: ", data.userData.messages[key]);
-    if (data.userData.messages[key].conversationId === currentConversationId) {
-      for (const message in data.userData.messages[key].messages) {
-        const jsonObject = JSON.parse(
-          data.userData.messages[key].messages[message].message_text
-        );
-        console.log("Message: ", jsonObject.content);
-        conversationContainer.insertAdjacentHTML(
-          "beforeend",
-          `<div class="conver-user-container">
-              <div class="conver-user">
-              <img
-                  src="${
-                    jsonObject.role === "user"
-                      ? "https://pics.craiyon.com/2023-06-25/840d68a3348b4f00b23af0cfc4ac71d2.webp"
-                      : "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/768px-ChatGPT_logo.svg.png"
-                  }"
-                  class="conversation-profile-img"
-              />
-              <div class="conver-username">${
-                jsonObject.role === "user" ? "You" : "ChatGPT"
-              }</div>
-              </div>
-              <div class="conver-text">
-                  ${jsonObject.content}
-              </div>
-          </div>`
-        );
-      }
-    }
-  }
-  // Scroll down after new message been added
-  ScrollDownConversation();
-}
-
 // Add new conversation
 function NewConversation() {
   ClearMessages();
   currentConversationId = -1;
+  HighlightConversation(-1);
 }
 
 // Select conversation
@@ -276,10 +317,11 @@ async function SelectConversation(conversationId) {
   if (response.ok) {
     const result = await response.json();
     console.log(result);
-    ClearMessages();
-    DisplayMessages(result);
-    console.log(conversationId);
     currentConversationId = conversationId;
+    ClearMessages();
+    DisplayMessages(result.userData);
+    console.log(conversationId);
+    HighlightConversation(currentConversationId);
   } else {
     console.error(
       "Failed to send message:",
@@ -324,4 +366,26 @@ function RemoveConversation(converId) {
   console.log(conversationButton);
   conversationButton.remove();
   ClearMessages();
+}
+
+function StructureMessages(messages) {
+  return messages;
+}
+
+// Logout
+async function Logout() {
+  try {
+    const response = await fetch("/logout", {
+      method: "GET",
+    });
+
+    if (response.ok) {
+      // Redirect to the login page after successful logout
+      window.location.href = "/";
+    } else {
+      console.error("Error during logout");
+    }
+  } catch (error) {
+    console.error("Error during logout:", error);
+  }
 }

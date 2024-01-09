@@ -6,6 +6,7 @@
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "mysql2": "^3.6.5",
-    "openai": "^4.24.1"
+    "openai": "^4.24.1",
+    "uuid": "^9.0.1"
   }
 }
