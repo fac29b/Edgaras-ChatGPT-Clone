@@ -1,11 +1,14 @@
 const registrationSuccess = document.getElementById("registrationSuccess");
 const registrationFailed = document.getElementById("registrationFailed");
 
-function DisplayLoginMsg(result) {
+function DisplayRegisterMsg(result) {
   if (result.success) {
     registrationSuccess.style.display = "block";
+    registrationFailed.textContent = result.message;
+    registrationFailed.style.display = "none";
   } else {
-    if (result.errorCode === "ER_DUP_ENTRY") {
+    // Errcode: 1062 duplicate entry on the database side
+    if (result.error === 1062) {
       registrationFailed.textContent = "Username is already taken.";
     } else {
       registrationFailed.textContent = "Failed to register user.";
@@ -33,10 +36,10 @@ async function SendForm(username, password) {
 
     if (response.ok) {
       const result = await response.json();
-      DisplayLoginMsg(result);
+      DisplayRegisterMsg(result);
     } else {
       const result = await response.json();
-      DisplayLoginMsg(result);
+      DisplayRegisterMsg(result);
     }
   } catch (error) {
     console.error("Error during registration:", error);

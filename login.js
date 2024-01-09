@@ -1,13 +1,12 @@
 const loginFailed = document.getElementById("loginFailed");
 
-function DisplayLoginMsg(result) {
+function DisplayRegisterMsg(result) {
   if (result.success) {
     loginFailed.style.display = "none";
-    //sendToGlobalData(exportUserData);
     // Redirect to the home page upon successful login
     window.location.href = result.redirectUrl;
-  } else if (!result.success) {
-    loginFailed.textContent = "Username or Password incorrect.";
+  } else if (result.error) {
+    loginFailed.textContent = result.error;
     loginFailed.style.display = "block";
   }
 }
@@ -31,30 +30,12 @@ async function SendForm(username, password) {
 
     if (response.ok) {
       const result = await response.json();
-      DisplayLoginMsg(result);
+      DisplayRegisterMsg(result);
     } else {
       const result = await response.json();
-      DisplayLoginMsg(result);
+      DisplayRegisterMsg(result);
     }
   } catch (error) {
     console.error("Error during log in:", error);
-  }
-}
-
-// Logout
-async function Logout() {
-  try {
-    const response = await fetch("/logout", {
-      method: "GET",
-    });
-
-    if (response.ok) {
-      // Redirect to the login page after successful logout
-      window.location.href = "/";
-    } else {
-      console.error("Error during logout");
-    }
-  } catch (error) {
-    console.error("Error during logout:", error);
   }
 }

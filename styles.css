@@ -102,10 +102,13 @@ body {
   border-radius: 0.8rem 0 0 0.8rem;
   width: 90%;
   border: none;
-  border-left: solid 1px var(--text-color);
-  border-top: solid 1px var(--text-color);
-  border-bottom: solid 1px var(--text-color);
+  border: 1px solid var(--text-color);
+  border-right: none;
   cursor: pointer;
+}
+
+.chat-btn-focus {
+  background-color: var(--hover-color);
 }
 
 .nested-chat-btn {
@@ -115,10 +118,13 @@ body {
   border-radius: 0 0.8rem 0.8rem 0;
   width: 10%;
   border: none;
-  border-right: solid 1px var(--text-color);
-  border-top: solid 1px var(--text-color);
-  border-bottom: solid 1px var(--text-color);
+  border: 1px solid var(--text-color);
+  border-left: none;
   cursor: pointer;
+}
+
+.nested-chat-btn-focus {
+  background-color: var(--hover-color);
 }
 
 .nested-btn-menu {
@@ -163,6 +169,19 @@ body {
   padding: 0.5rem;
   height: 2.5rem;
   border-radius: 50%;
+}
+
+.profile-avatar-letter {
+  background-color: rebeccapurple;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
+  font-size: 1.6rem;
 }
 
 .profile-name {
@@ -215,6 +234,19 @@ header {
   }
 }
 
+.conversation-user-avatar {
+  background-color: rebeccapurple;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5rem;
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 50%;
+  color: var(--text-color);
+  font-size: 0.8rem;
+}
+
 .conver-user {
   display: flex;
   border-radius: 0.8rem;
@@ -263,7 +295,14 @@ header {
   width: 40%;
 }
 
-.textarea-cont textarea {
+.textarea-cont form {
+  display: flex;
+  position: relative;
+  height: 3rem;
+  width: 100%;
+}
+
+.textarea-cont-textarea {
   background-color: var(--main-bg-color);
   border: none;
   border: 1px solid var(--text-color);
