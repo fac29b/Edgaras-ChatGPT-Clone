@@ -266,22 +266,17 @@ app.post("/submit", express.json(), async (req, res) => {
 
     // Retrieve user messages where conversation id mathes in the database
     // Store retrieved messages into array
-    const updatedConversation = [];
-    for (const conversation of conversations) {
-      const [conversationMessages] = await pool.execute(
-        "SELECT message_text FROM messages WHERE conversation_id = ?",
-        [conversation.id]
-      );
-      updatedConversation.push(...conversationMessages);
-    }
+    const [conversationMessages] = await pool.execute(
+      "SELECT message_text FROM messages WHERE conversation_id = ?",
+      [crrntConversationId]
+    );
 
     // Parse retrieved messages to be sent off to openai api
     const parsedMessages = [];
-    for (const messageObject of updatedConversation) {
+    for (const messageObject of conversationMessages) {
       const parsedMessage = JSON.parse(messageObject.message_text);
       parsedMessages.push(parsedMessage);
     }
-
     // OpenAI response after sending it parsed messages
     const openaiResponse = await generateResponse(parsedMessages);
     console.log(openaiResponse);
@@ -340,8 +335,6 @@ app.post("/retrieveData", express.json(), async (req, res) => {
         messages: conversationMessages,
       });
     }
-    console.log(messages);
-    console.log(userData[0].username);
     // Data to be sent to clien side
     const dataForClient = {
       username: userData[0].username,
@@ -349,8 +342,6 @@ app.post("/retrieveData", express.json(), async (req, res) => {
       messages: messages,
     };
 
-    console.log(userData[0]);
-    //console.log(messages[0].messages);
     console.log("Database data retrieved");
 
     // Send a JSON response to the client with success details
@@ -404,7 +395,7 @@ app.post("/retrieveConversation", express.json(), async (req, res) => {
       messages: messages,
     };
 
-    console.log("Conversation data retrieved", dataForClient);
+    console.log("Conversation data retrieved");
 
     // Send a JSON response to the client with success details
     res.json({

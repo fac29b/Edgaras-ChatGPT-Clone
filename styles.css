@@ -6,6 +6,7 @@
 
 body {
   font-family: Arial, sans-serif;
+  letter-spacing: 0.5px;
   background-color: var(--main-bg-color);
   margin: 0;
   padding: 0;
@@ -354,6 +355,37 @@ header {
   background-color: var(--hover-color);
 }
 
-.code-style {
+/* code colors */
+
+pre {
+  margin: 0;
+  padding: 0;
+}
+
+code {
+  margin: 0;
+  padding: 0;
+}
+
+.code-name-bg {
+  font-family: monospace, sans-serif;
+  letter-spacing: 0px;
+  background-color: var(--hover-color);
+  padding: 0.8rem;
+  border-radius: 0.5rem 0.5rem 0rem 0rem;
+}
+
+.code-background {
+  font-family: monospace, sans-serif;
+  display: block;
+  letter-spacing: 0px;
   background-color: black;
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  font-size: 1rem;
+  margin-top: 1rem;
+  overflow-x: scroll;
+}
+
+.code-container {
+  padding: 0.5rem;
 }
