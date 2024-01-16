@@ -190,7 +190,6 @@ function DisplayMessages(data) {
         const jsonObject = JSON.parse(
           data.messages[key].messages[message].message_text
         );
-        console.log("Message: ", jsonObject.content);
         conversationContainer.insertAdjacentHTML(
           "beforeend",
           `<div class="conver-user-container">
@@ -203,7 +202,7 @@ function DisplayMessages(data) {
               }</div>
               </div>
               <div class="conver-text">
-                  ${jsonObject.content}
+                  ${StructureMessages(jsonObject.content)}
               </div>
           </div>`
         );
@@ -245,7 +244,7 @@ function UpdateConversation(message, username) {
         <div class="conver-username">${username}</div>
         </div>
         <div class="conver-text">
-            ${message}
+            ${StructureMessages(message)}
         </div>
     </div>`
   );
@@ -360,6 +359,8 @@ async function DeleteCoversation(conversationId) {
   }
 }
 
+// Removes conversation button HTML from the page after
+// conversation infromation was deleted on database side first
 function RemoveConversation(converId) {
   console.log(converId);
   const conversationButton = document.getElementById(converId + "delete");
@@ -368,8 +369,57 @@ function RemoveConversation(converId) {
   ClearMessages();
 }
 
-function StructureMessages(messages) {
-  return messages;
+function StructureMessages(originalMessage) {
+  let storedOriginalMessage = originalMessage;
+  // Remove all < > elements
+  storedOriginalMessage = originalMessage
+    .replace(/\</g, "&lt;")
+    .replace(/\>/g, "&gt");
+
+  storedOriginalMessage = RestructureCode(storedOriginalMessage);
+
+  storedOriginalMessage = storedOriginalMessage.replace(/\n/g, "<br>");
+
+  return storedOriginalMessage;
+}
+
+function RestructureCode(messageWithRemovedElements) {
+  let structuredCode = messageWithRemovedElements;
+
+  if (structuredCode.match(/```\w+/g)) {
+    const codeFound = structuredCode.replace(/```(\w+)/g, (match, language) => {
+      return `<pre><div class="code-background"><div class="code-name-bg">${CorrectCodeLanguageName(
+        language
+      )}</div><div class="code-container"><code>`;
+    });
+    //
+    structuredCode = codeFound.replace(/```/g, `</code></div></div></pre>`);
+  }
+  // Find comments and change color
+  const commentsColored = structuredCode.replace(
+    /<code>[\s\S]*?<\/code>/g,
+    (match) => {
+      const comments = match.replace(/(\/\/ .*|\# .*|\/\*)/g, (comment) => {
+        return `<span style='color:#008000'>${comment}</span>`;
+      });
+      return comments;
+    }
+  );
+  //
+  return commentsColored;
+}
+
+function CorrectCodeLanguageName(language) {
+  switch (language) {
+    case "cpp":
+      return "c++";
+
+    case "csharp":
+      return "c#";
+
+    default:
+      return language;
+  }
 }
 
 // Logout
